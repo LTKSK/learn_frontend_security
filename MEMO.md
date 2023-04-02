@@ -1,0 +1,3 @@
+- HSTS
+    - HTTP Strtict Transport Security
+    - レスポンスヘッダに`Strict-Transport-Security` ヘッダを付与すt
