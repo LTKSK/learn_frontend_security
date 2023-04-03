@@ -1,3 +1,24 @@
 - HSTS
     - HTTP Strtict Transport Security
-    - レスポンスヘッダに`Strict-Transport-Security` ヘッダを付与すt
+    - レスポンスヘッダに`Strict-Transport-Security` ヘッダを付与することで使える
+- canvasでクロスオリジン画像を読み込んだ時、データアクセスが同一のオリジンポリシーに制限される
+    - クロスオリジンの画像を読み込んだcanvasはTainted(汚染された)状態とみなされる
+- クロスオリジンのリソースにはWebStorageやIndexedDBに保存されたデータへのアクセスも制限がかかる
+    - 同じオリジンのものにしか触れない
+- simple request
+    - imgやlinkなど、リソースを取得するGETリクエスト、またはformを使ったGETやPOSTによる、`ブラウザがデフォルトで送信できるリクエスト`をsimple requestと呼ぶ
+        - simple requestではプリフライトが飛ばない
+- fetchのcredentialsオプション
+    - includeはオリジン関係なしにcookie投げる。same-originは名前のまんま
+    - cross originの場合、サーバからは`Access-Control-Allow-Credentials`ヘッダの送信が必要
+        - この時、 `Access-Control-Allow-Origin`ヘッダに*は使えない。明示的に指定が必要
+- 同modeオプション
+    - same-origin,cors,no-corsがある
+    - no-corsはシンプルリクエストだけクロスオリジンに送信
+    - corsはデフォルト。クロスオリジンへ送信するときにcorsを有効にすると明示できる
+        - これは`crossorigin`属性に関連する
+- crossorigin属性
+    - htmlタグにつける属性。例えばimgタグのリクエストのmodeははsame-originならsame-origin, cross originならno-corsになる
+        - この時crossoriginをつけることでmodeをcorsとして送信できる
+    - crossorigin=""はcrossoriginだけの指定と同じ。他に"anonymous"と"use-credentials"がある
+        - fetchのオプション的にはanonymousはomit、use-credentialsがincludeになる
